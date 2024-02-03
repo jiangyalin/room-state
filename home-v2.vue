@@ -293,36 +293,36 @@ export default {
       // 是否存在重合区域(不存在)
       if (Math.abs(yBeforeToLast) > ySize || Math.abs(xBeforeToLast) > xSize) {
         this.calculationInitRoomStateList(top, left, ySize, xSize, margin)
-      } else {
-        const maxLength = (ySize + margin * 2) * (xSize + margin * 2)
-        for (let i = 0; i < maxLength; i++) {
-          const reverseIndex = maxLength - i - 1
-          // 往下
-          if (this.roomStateArray[i].top < (top - margin)) {
-            // this.roomStateArray.splice(i, 1, this.roomState[this.roomStateArray[i].index + (ySize + margin * 2) * (this.w + margin * 2)])
-            this.roomStateArray.splice(i, 1, this.roomStateMap[(this.roomStateArray[i].top + (ySize + margin * 2)) + '-' + this.roomStateArray[i].left])
-          }
-          // 往上
-          if (this.roomStateArray[reverseIndex].top > (top + (ySize - 1) + margin)) {
-            // this.roomStateArray.splice(reverseIndex, 1, this.roomState[(this.roomStateArray[reverseIndex].index - (ySize + margin * 2) * (this.w + margin * 2))])
-            this.roomStateArray.splice(reverseIndex, 1, this.roomStateMap[(this.roomStateArray[reverseIndex].top - (ySize + margin * 2)) + '-' + this.roomStateArray[reverseIndex].left])
-          }
-          // 往右
-          if (this.roomStateArray[i].left < left - margin) {
-            // this.roomStateArray.splice(i, 1, this.roomState[this.roomStateArray[i].index + xSize + margin * 2])
-            this.roomStateArray.splice(i, 1, this.roomStateMap[this.roomStateArray[i].top + '-' + (this.roomStateArray[i].left + (xSize + margin * 2))])
-          }
-          // 往左
-          if (this.roomStateArray[reverseIndex].left > (left + (xSize - 1) + margin)) {
-            // this.roomStateArray.splice(reverseIndex, 1, this.roomState[this.roomStateArray[reverseIndex].index - (xSize + margin * 2)])
-            this.roomStateArray.splice(reverseIndex, 1, this.roomStateMap[this.roomStateArray[reverseIndex].top + '-' + (this.roomStateArray[reverseIndex].left - (xSize + margin * 2))])
-          }
-        }
-        this.roomStateListLast.lastTop = top
-        this.roomStateListLast.lastLeft = left
-        this.roomStateListLast.lastBottom = bottom
-        this.roomStateListLast.lastRight = right
+        return false
       }
+      const maxLength = (ySize + margin * 2) * (xSize + margin * 2)
+      for (let i = 0; i < maxLength; i++) {
+        const reverseIndex = maxLength - i - 1
+        // 往下
+        if (this.roomStateArray[i].top < (top - margin)) {
+          // this.roomStateArray.splice(i, 1, this.roomState[this.roomStateArray[i].index + (ySize + margin * 2) * (this.w + margin * 2)])
+          this.roomStateArray.splice(i, 1, this.roomStateMap[(this.roomStateArray[i].top + (ySize + margin * 2)) + '-' + this.roomStateArray[i].left])
+        }
+        // 往上
+        if (this.roomStateArray[reverseIndex].top > (top + (ySize - 1) + margin)) {
+          // this.roomStateArray.splice(reverseIndex, 1, this.roomState[(this.roomStateArray[reverseIndex].index - (ySize + margin * 2) * (this.w + margin * 2))])
+          this.roomStateArray.splice(reverseIndex, 1, this.roomStateMap[(this.roomStateArray[reverseIndex].top - (ySize + margin * 2)) + '-' + this.roomStateArray[reverseIndex].left])
+        }
+        // 往右
+        if (this.roomStateArray[i].left < left - margin) {
+          // this.roomStateArray.splice(i, 1, this.roomState[this.roomStateArray[i].index + xSize + margin * 2])
+          this.roomStateArray.splice(i, 1, this.roomStateMap[this.roomStateArray[i].top + '-' + (this.roomStateArray[i].left + (xSize + margin * 2))])
+        }
+        // 往左
+        if (this.roomStateArray[reverseIndex].left > (left + (xSize - 1) + margin)) {
+          // this.roomStateArray.splice(reverseIndex, 1, this.roomState[this.roomStateArray[reverseIndex].index - (xSize + margin * 2)])
+          this.roomStateArray.splice(reverseIndex, 1, this.roomStateMap[this.roomStateArray[reverseIndex].top + '-' + (this.roomStateArray[reverseIndex].left - (xSize + margin * 2))])
+        }
+      }
+      this.roomStateListLast.lastTop = top
+      this.roomStateListLast.lastLeft = left
+      this.roomStateListLast.lastBottom = bottom
+      this.roomStateListLast.lastRight = right
       // this.roomStateArray = this.roomState.filter(item => item.show)
     }
   }
